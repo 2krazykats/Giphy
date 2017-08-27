@@ -16,14 +16,21 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script type="text/javascript" src="assets/js/app.js">
-
         </script>
 
     </head>
 
     <body>
-
+        <div class="jumbotron" id="jumboId"><h2>Click a button to get reaction stickers.
+            <br>
+            Enter a new reaction to get the stickers from Giphy.com</h2>
+        </div>
         <div id="topicsContainer"> </div>
+        <form id="formId">
+    		<label for="gif-input" >Add an emotion button:</label>
+    		<input type="text" id="gif-input">
+    		<input type="submit" id="add-gif" class="btn">
+	   </form>
         <div id="giphyDisplay"> </div>
 
 
