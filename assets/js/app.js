@@ -9,7 +9,6 @@ $(document).ready(function() {
 
     function generateButtons() {
 
-
         for(var i=0; i<topics.length; i++) {
             var topicsButton = $("<button>");
             // $("topicsContainer").text(newButton + topics[i]);
@@ -21,8 +20,6 @@ $(document).ready(function() {
         }
     }
 
-
-    generateButtons();
 
     $("#add-gif").on("click",  function() {
          event.preventDefault();
@@ -36,13 +33,19 @@ $(document).ready(function() {
                 topics.push(newTopic);
                 newButton.text(newTopic);
                 $("#topicsContainer").append(newButton);
+
+                $("#gif-input").val("");
             });
 
     function queryGiphy() {
 
-        for (i=0; i<topics.length; i++) {
-        var queryURL = "https://api.giphy.com//v1/stickers/search?api_key=dc6zaTOxFJmzC&q="
-						+ topics[i] + "&limit=" + limit;
+        // for (i=0; i<topics.length; i++) {
+            var chosenTopic = $("#topicsContainer").on("click", ".stickerButton", function(){
+                    console.log($(this).val());
+
+            });
+            var queryURL = "https://api.giphy.com//v1/stickers/search?api_key=dc6zaTOxFJmzC&q="
+						+ chosenTopic + "&limit=" + limit;
             $.ajax({
   	          url: queryURL,
   	          method: "GET"
@@ -59,38 +62,40 @@ $(document).ready(function() {
                     var p = $("<p>").text(`Rating: ${rating}`);
 
                     var stickerImage = $("<img>");
-                    stickerImage.attr("src", results[i].images.downsided_still);
-
+                    stickerImage.attr("src", results[i].images.fixed_height_small.url);
+                    stickerImage.attr("data-still", results[i].images.fixed_height_small_still.url);
+            		stickerImage.attr("data-animate", results[i].images.fixed_height_small.url);
                     gifDiv.prepend(p);
                     gifDiv.prepend(stickerImage);
-
-                    console.log(gifDiv);
-                    console.log(rating);
 
 	        	    $("#giphyDisplay").append(gifDiv);
                 }
 
 	     });
-        }
+        // }
     }
 
 
-//     var queryURL1 = "https://api.giphy.com//v1/stickers/search?api_key=dc6zaTOxFJmzC&q=love&limit=10";
-//
-//     $.ajax({
-//         url: queryURL1,
-//         method: "GET"
-//     })
-//     .done(function(response){
-//         console.log(response.data);
-//
-//     }
-// )
+    generateButtons();
 
    $("#topicsContainer").on("click", ".stickerButton", function() {
-        // event.preventDefault();
-            queryGiphy();
-        console.log('yes this works');
-	        });
+        event.preventDefault();
+        queryGiphy();
 
+	});
+
+    $("#giphyDisplay").on("click", ".item", function(){
+
+            var state = $(this).attr("data-state");
+                console.log(this);
+            if (state === "still") {
+              $(this).attr("src", $(this).attr("data-animate"));
+              $(this).attr("data-state", "animate");
+            } else {
+              $(this).attr("src", $(this).attr("data-still"));
+              $(this).attr("data-state", "still");
+          }
       });
+
+
+});
