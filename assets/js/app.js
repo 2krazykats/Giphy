@@ -57,11 +57,12 @@ $(document).ready(function() {
 
                 for (var i = 0; i < results.length; i++) {
 
-                    var gifDiv = $("<div class='item'>");
+                    var gifDiv = $("<div>");
                     var rating = results[i].rating;
                     var p = $("<p>").text(`Rating: ${rating}`);
 
                     var stickerImage = $("<img>");
+                    stickerImage.addClass('stickImage');
                     stickerImage.attr("src", results[i].images.fixed_height_small.url);
                     stickerImage.attr("data-still", results[i].images.fixed_height_small_still.url);
             		stickerImage.attr("data-animate", results[i].images.fixed_height_small.url);
@@ -84,8 +85,8 @@ $(document).ready(function() {
 
 	});
 
-    $("#giphyDisplay").on("click", ".item", function(){
-
+    // $("#giphyDisplay").on("click", ".item", function(){
+        $("#giphyDisplay").on("click", ".stickImage", function(){
             var state = $(this).attr("data-state");
                 console.log(this);
             if (state === "still") {
