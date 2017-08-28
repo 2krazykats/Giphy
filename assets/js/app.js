@@ -24,7 +24,8 @@ $(document).ready(function() {
 
     generateButtons();
 
-    $("#add-gif").on("click", ".stickerButton",  function() {
+    $("#add-gif").on("click",  function() {
+         event.preventDefault();
                 //Get the value from the user input
                 var newTopic = $("#gif-input").val().trim();
 
@@ -51,14 +52,14 @@ $(document).ready(function() {
                 var results = response.data;
             	$('#giphyDisplay').empty();
 
-                for (var i = 0; i < results[i].length; i++) {
+                for (var i = 0; i < results.length; i++) {
 
                     var gifDiv = $("<div class='item'>");
                     var rating = results[i].rating;
                     var p = $("<p>").text(`Rating: ${rating}`);
 
                     var stickerImage = $("<img>");
-                    stickerImage.attr("src", response[i].data.images.downsided_still);
+                    stickerImage.attr("src", results[i].images.downsided_still);
 
                     gifDiv.prepend(p);
                     gifDiv.prepend(stickerImage);
@@ -86,9 +87,10 @@ $(document).ready(function() {
 //     }
 // )
 
-   $("#sticker-0").on("click", function() {
-        event.preventDefault();
+   $("#topicsContainer").on("click", ".stickerButton", function() {
+        // event.preventDefault();
             queryGiphy();
+        console.log('yes this works');
 	        });
 
       });
